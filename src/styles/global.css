@@ -1,0 +1,129 @@
+/* ============================================================
+   global.css
+   -----------
+   Design tokens + base resets + dark-theme overrides.
+
+   Brand palette (from the assignment):
+     background  : #EEEEEE
+     text        : #06202B
+     button      : #0A2947
+   ============================================================ */
+
+:root {
+  /* Brand */
+  --color-bg: #eeeeee;
+  --color-text: #06202b;
+  --color-button: #0a2947;
+
+  /* Derived */
+  --color-text-muted: #5b6f78;
+  --color-border: #d8dde0;
+  --color-danger: #d64545;
+  --color-accent: #ffd27a;
+
+  /* Shadows */
+  --shadow-card: 0 2px 8px rgba(6, 32, 43, 0.06);
+  --shadow-card-hover: 0 12px 26px rgba(6, 32, 43, 0.14);
+
+  /* Typography */
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  --font-display: 'Plus Jakarta Sans', 'Inter', sans-serif;
+}
+
+/* ---- Dark theme (bonus toggle) ---- */
+[data-theme='dark'] {
+  --color-bg: #06202b;
+  --color-text: #eeeeee;
+  --color-button: #ffd27a;       /* accent becomes the "primary action" */
+  --color-text-muted: #8ba0aa;
+  --color-border: #1a3946;
+  --color-danger: #ff6b6b;
+  --color-accent: #ffd27a;
+
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-card-hover: 0 12px 26px rgba(0, 0, 0, 0.5);
+}
+
+/* ---- Reset ---- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* ---- Custom scrollbar (subtle brand touch) ---- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* ---- Focus visibility (a11y) ---- */
+:focus-visible {
+  outline: 2px solid var(--color-button);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+[data-theme='dark'] :focus-visible {
+  outline-color: var(--color-accent);
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
