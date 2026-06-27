@@ -1,0 +1,56 @@
+/* ===== CategoryFilter ===== */
+.category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+}
+
+.category-chip {
+  border: 1.5px solid var(--color-border);
+  background: #fff;
+  color: var(--color-text);
+  padding: 9px 16px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.18s ease, color 0.18s ease,
+    border-color 0.18s ease, transform 0.12s ease;
+}
+
+.category-chip:hover {
+  border-color: var(--color-button);
+  color: var(--color-button);
+}
+
+.category-chip:active {
+  transform: scale(0.96);
+}
+
+.category-chip--active {
+  background: var(--color-button);
+  border-color: var(--color-button);
+  color: #fff;
+}
+
+.category-chip--active:hover {
+  color: #fff;
+}
+
+/* On narrow screens let the chips scroll horizontally instead of wrapping
+   into multiple rows that push the product grid too far down. */
+@media (max-width: 560px) {
+  .category-filter {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .category-chip {
+    flex-shrink: 0;
+  }
+}

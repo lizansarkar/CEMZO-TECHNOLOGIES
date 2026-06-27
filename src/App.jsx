@@ -12,7 +12,7 @@
 
 import { Routes, Route } from 'react-router'
 import { AppProvider } from './context/AppContext'
-import Navbar from './components/Navbar'
+import Navbar from './component/Navbar'
 import Home from './pages/Home'
 
 export default function App() {
