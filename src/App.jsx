@@ -14,6 +14,8 @@ import { Routes, Route } from 'react-router'
 import { AppProvider } from './context/AppContext'
 import Navbar from './component/Navbar'
 import Home from './pages/Home'
+import Catalogue from './pages/Catalogue'
+import About from './pages/About'
 
 export default function App() {
   return (
@@ -21,7 +23,8 @@ export default function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* Fallback to home for any unknown route (single-page app). */}
+        <Route path="/catalogue" element={<Catalogue />} />
+        <Route path="/about" element={<About />} />
         <Route path="*" element={<Home />} />
       </Routes>
     </AppProvider>

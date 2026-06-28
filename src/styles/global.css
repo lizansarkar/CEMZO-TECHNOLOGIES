@@ -1,41 +1,29 @@
-/* ============================================================
-   global.css
-   -----------
-   Design tokens + base resets + dark-theme overrides.
+@import "tailwindcss";
 
-   Brand palette (from the assignment):
-     background  : #EEEEEE
-     text        : #06202B
-     button      : #0A2947
-   ============================================================ */
-
-:root {
-  /* Brand */
+@theme {
   --color-bg: #eeeeee;
   --color-text: #06202b;
   --color-button: #0a2947;
-
-  /* Derived */
   --color-text-muted: #5b6f78;
   --color-border: #d8dde0;
   --color-danger: #d64545;
   --color-accent: #ffd27a;
 
-  /* Shadows */
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Inter", ui-sans-serif, sans-serif;
+
   --shadow-card: 0 2px 8px rgba(6, 32, 43, 0.06);
   --shadow-card-hover: 0 12px 26px rgba(6, 32, 43, 0.14);
 
-  /* Typography */
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    sans-serif;
-  --font-display: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  --animate-overlay-fade: overlayFade 0.2s ease;
+  --animate-panel-pop: panelPop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-shimmer: shimmer 1.4s infinite;
 }
 
-/* ---- Dark theme (bonus toggle) ---- */
-[data-theme='dark'] {
+[data-theme="dark"] {
   --color-bg: #06202b;
   --color-text: #eeeeee;
-  --color-button: #ffd27a;       /* accent becomes the "primary action" */
+  --color-button: #ffd27a;
   --color-text-muted: #8ba0aa;
   --color-border: #1a3946;
   --color-danger: #ff6b6b;
@@ -45,22 +33,23 @@
   --shadow-card-hover: 0 12px 26px rgba(0, 0, 0, 0.5);
 }
 
-/* ---- Reset ---- */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+@keyframes overlayFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-* {
-  margin: 0;
-  padding: 0;
+@keyframes panelPop {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-html,
-body {
-  height: 100%;
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
 
 body {
   font-family: var(--font-body);
@@ -72,55 +61,19 @@ body {
   transition: background 0.25s ease, color 0.25s ease;
 }
 
-#root {
-  min-height: 100vh;
-}
+#root { min-height: 100vh; }
+img { max-width: 100%; display: block; }
 
-img {
-  max-width: 100%;
-  display: block;
-}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
 
-a {
-  color: inherit;
-}
+:focus-visible { outline: 2px solid var(--color-button); outline-offset: 2px; border-radius: 4px; }
+[data-theme="dark"] :focus-visible { outline-color: var(--color-accent); }
 
-button {
-  font-family: inherit;
-}
-
-/* ---- Custom scrollbar (subtle brand touch) ---- */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-  border-radius: 999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-muted);
-}
-
-/* ---- Focus visibility (a11y) ---- */
-:focus-visible {
-  outline: 2px solid var(--color-button);
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
-[data-theme='dark'] :focus-visible {
-  outline-color: var(--color-accent);
-}
-
-/* ---- Reduced motion ---- */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;

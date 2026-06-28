@@ -1,37 +1,26 @@
-
 import { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router'
+import { Link, NavLink, useLocation } from 'react-router'
 import { useApp } from '../context/AppContext'
-import './Navbar.css'
+import MobileDrawer from './MobileDrawer'
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { theme, toggleTheme, favouritesCount } = useApp()
   const location = useLocation()
 
-  // Close the mobile menu whenever the route changes.
-  useEffect(() => {
-    setMenuOpen(false)
-  }, [location.pathname])
+  useEffect(() => { setMenuOpen(false) }, [location.pathname])
 
-  // Lock body scroll while the mobile menu is open.
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
-    return () => {
-      document.body.style.overflow = ''
-    }
+    return () => { document.body.style.overflow = '' }
   }, [menuOpen])
 
-  // Auto-close the mobile drawer if the user resizes back to desktop.
   useEffect(() => {
-    const onResize = () => {
-      if (window.innerWidth >= 768 && menuOpen) setMenuOpen(false)
-    }
+    const onResize = () => { if (window.innerWidth >= 768 && menuOpen) setMenuOpen(false) }
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [menuOpen])
 
-  // ESC closes the drawer.
   useEffect(() => {
     if (!menuOpen) return
     const onKey = (e) => e.key === 'Escape' && setMenuOpen(false)
@@ -40,96 +29,39 @@ export default function Navbar() {
   }, [menuOpen])
 
   return (
-    <header className="navbar">
-      <div className="navbar__inner">
-        {/* Brand */}
-        <Link to="/" className="navbar__brand" aria-label="ShopVerse home">
-          <span className="navbar__logo">
-            <i className="fa-solid fa-bag-shopping" aria-hidden="true" />
-          </span>
-          <span className="navbar__name">ShopVerse</span>
+    <header className="sticky top-0 z-[100] bg-[var(--color-button)] text-white shadow-[0_2px_12px_rgba(6,32,43,0.1)]">
+      <div className="max-w-[1400px] mx-auto px-5 h-16 flex items-center justify-between gap-4">
+        <Link to="/" className="inline-flex items-center gap-2.5 no-underline text-white font-extrabold text-xl font-display" aria-label="ShopVerse home">
+          <img src="/Logo.png" alt="" className="h-12" />
         </Link>
 
-        {/* Desktop links */}
-        <nav className="navbar__links" aria-label="Primary">
-          <Link to="/" className="navbar__link">Home</Link>
-          <Link to="/" className="navbar__link">Catalogue</Link>
-          <Link to="/" className="navbar__link">About</Link>
+        <nav className="hidden md:flex items-center gap-1" aria-label="Primary">
+          <NavLink to="/" end className={({ isActive }) => `no-underline text-[0.92rem] font-medium px-3.5 py-2 rounded-lg transition-[background,color] duration-180 hover:bg-white/18 hover:text-white ${isActive ? 'bg-white/18 text-white' : 'text-white/85'}`}>Home</NavLink>
+          <NavLink to="/catalogue" className={({ isActive }) => `no-underline text-[0.92rem] font-medium px-3.5 py-2 rounded-lg transition-[background,color] duration-180 hover:bg-white/18 hover:text-white ${isActive ? 'bg-white/18 text-white' : 'text-white/85'}`}>Catalogue</NavLink>
+          <NavLink to="/about" className={({ isActive }) => `no-underline text-[0.92rem] font-medium px-3.5 py-2 rounded-lg transition-[background,color] duration-180 hover:bg-white/18 hover:text-white ${isActive ? 'bg-white/18 text-white' : 'text-white/85'}`}>About</NavLink>
         </nav>
 
-        {/* Right actions */}
-        <div className="navbar__actions">
-          <button
-            type="button"
-            className="navbar__icon-btn"
-            aria-label={`Favourites (${favouritesCount})`}
-            title="Favourites"
-          >
+        <div className="flex items-center gap-1.5">
+          <button type="button" className="relative w-10 h-10 border-none bg-transparent text-white cursor-pointer rounded-xl text-base inline-flex items-center justify-center transition-[background] duration-180 hover:bg-white/12" aria-label={`Favourites (${favouritesCount})`} title="Favourites">
             <i className="fa-solid fa-heart" aria-hidden="true" />
             {favouritesCount > 0 && (
-              <span className="navbar__badge">{favouritesCount}</span>
+              <span className="absolute top-1 right-1 min-w-[18px] h-[18px] px-[5px] rounded-full bg-[var(--color-danger)] text-white text-[0.65rem] font-bold inline-flex items-center justify-center leading-none">{favouritesCount}</span>
             )}
           </button>
 
-          <button
-            type="button"
-            className="navbar__icon-btn"
-            onClick={toggleTheme}
-            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
-            title="Toggle theme"
-          >
+          <button type="button" className="relative w-10 h-10 border-none bg-transparent text-white cursor-pointer rounded-xl text-base inline-flex items-center justify-center transition-[background] duration-180 hover:bg-white/12" onClick={toggleTheme} aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`} title="Toggle theme">
             <i className={`fa-solid ${theme === 'light' ? 'fa-moon' : 'fa-sun'}`} aria-hidden="true" />
           </button>
 
-          {/* Hamburger (mobile only) */}
-          <button
-            type="button"
-            className={`navbar__hamburger ${menuOpen ? 'is-open' : ''}`}
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-menu"
-          >
-            <span />
-            <span />
-            <span />
+          <button type="button" className={`md:hidden inline-flex flex-col justify-center gap-[5px] w-10 h-10 px-[9px] border-none bg-transparent cursor-pointer rounded-xl`} onClick={() => setMenuOpen((v) => !v)} aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} aria-controls="mobile-menu">
+            <span className={`block h-[2px] w-full bg-white rounded-[2px] transition-all duration-250 ${menuOpen ? 'translate-y-[7px] rotate-45' : ''}`} />
+            <span className={`block h-[2px] w-full bg-white rounded-[2px] transition-all duration-250 ${menuOpen ? 'opacity-0' : ''}`} />
+            <span className={`block h-[2px] w-full bg-white rounded-[2px] transition-all duration-250 ${menuOpen ? '-translate-y-[7px] -rotate-45' : ''}`} />
           </button>
         </div>
       </div>
 
-      {/* Mobile drawer */}
-      <div
-        id="mobile-menu"
-        className={`navbar__drawer ${menuOpen ? 'is-open' : ''}`}
-        aria-hidden={!menuOpen}
-      >
-        <nav className="navbar__drawer-nav" aria-label="Mobile">
-          <Link to="/" className="navbar__drawer-link">
-            <i className="fa-solid fa-house" aria-hidden="true" /> Home
-          </Link>
-          <Link to="/" className="navbar__drawer-link">
-            <i className="fa-solid fa-layer-group" aria-hidden="true" /> Catalogue
-          </Link>
-          <Link to="/" className="navbar__drawer-link">
-            <i className="fa-solid fa-circle-info" aria-hidden="true" /> About
-          </Link>
-          <Link to="/" className="navbar__drawer-link">
-            <i className="fa-solid fa-heart" aria-hidden="true" /> Favourites
-            {favouritesCount > 0 && (
-              <span className="navbar__badge">{favouritesCount}</span>
-            )}
-          </Link>
-        </nav>
-      </div>
-
-      {/* Overlay behind drawer */}
-      {menuOpen && (
-        <div
-          className="navbar__overlay"
-          onClick={() => setMenuOpen(false)}
-          aria-hidden="true"
-        />
-      )}
+      <MobileDrawer menuOpen={menuOpen} onClose={() => setMenuOpen(false)} favouritesCount={favouritesCount} />
     </header>
   )
 }
