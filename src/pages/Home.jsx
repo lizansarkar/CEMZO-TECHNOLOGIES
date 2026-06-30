@@ -132,10 +132,9 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t border-[var(--color-border)] py-5 text-center text-[0.82rem] text-[var(--color-text-muted)]">
         <p className="m-0">
-          <i className="fa-solid fa-circle-info" aria-hidden="true" /> Built with React +
-          Vite + Axios. Data from{' '}
+          <i className="fa-solid fa-circle-info" aria-hidden="true" /> @lizansarkar use by {" "}
           <a href="https://fakestoreapi.com" target="_blank" rel="noreferrer" className="text-[var(--color-button)] no-underline font-semibold hover:underline">
-            FakeStore API
+            fake store api
           </a>
           .
         </p>
