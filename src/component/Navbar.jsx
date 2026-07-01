@@ -36,9 +36,9 @@ export default function Navbar() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-1" aria-label="Primary">
-          <NavLink to="/" end className={({ isActive }) => `no-underline text-[0.92rem] font-medium px-3.5 py-2 rounded-lg transition-[background,color] duration-180 hover:bg-white/18 hover:text-white ${isActive ? 'bg-white/18 text-white' : 'text-white/85'}`}>Home</NavLink>
-          <NavLink to="/catalogue" className={({ isActive }) => `no-underline text-[0.92rem] font-medium px-3.5 py-2 rounded-lg transition-[background,color] duration-180 hover:bg-white/18 hover:text-white ${isActive ? 'bg-white/18 text-white' : 'text-white/85'}`}>Catalogue</NavLink>
-          <NavLink to="/about" className={({ isActive }) => `no-underline text-[0.92rem] font-medium px-3.5 py-2 rounded-lg transition-[background,color] duration-180 hover:bg-white/18 hover:text-white ${isActive ? 'bg-white/18 text-white' : 'text-white/85'}`}>About</NavLink>
+          <NavLink to="/" end className={({ isActive }) => `no-underline text-[0.92rem] font-medium px-3.5 py-2 rounded-full transition-[background,color] duration-180 hover:bg-white/18 hover:text-white ${isActive ? 'bg-white/18 text-white' : 'text-white/85'}`}>Home</NavLink>
+          <NavLink to="/catalogue" className={({ isActive }) => `no-underline text-[0.92rem] font-medium px-3.5 py-2 rounded-full transition-[background,color] duration-180 hover:bg-white/18 hover:text-white ${isActive ? 'bg-white/18 text-white' : 'text-white/85'}`}>Catalogue</NavLink>
+          <NavLink to="/about" className={({ isActive }) => `no-underline text-[0.92rem] font-medium px-3.5 py-2 rounded-full transition-[background,color] duration-180 hover:bg-white/18 hover:text-white ${isActive ? 'bg-white/18 text-white' : 'text-white/85'}`}>About</NavLink>
         </nav>
 
         <div className="flex items-center gap-1.5">
