@@ -20,19 +20,6 @@
   --animate-shimmer: shimmer 1.4s infinite;
 }
 
-[data-theme="dark"] {
-  --color-bg: #06202b;
-  --color-text: #eeeeee;
-  --color-button: #ffd27a;
-  --color-text-muted: #8ba0aa;
-  --color-border: #1a3946;
-  --color-danger: #ff6b6b;
-  --color-accent: #ffd27a;
-
-  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.35);
-  --shadow-card-hover: 0 12px 26px rgba(0, 0, 0, 0.5);
-}
-
 @keyframes overlayFade {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -70,7 +57,6 @@ img { max-width: 100%; display: block; }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
 
 :focus-visible { outline: 2px solid var(--color-button); outline-offset: 2px; border-radius: 4px; }
-[data-theme="dark"] :focus-visible { outline-color: var(--color-accent); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

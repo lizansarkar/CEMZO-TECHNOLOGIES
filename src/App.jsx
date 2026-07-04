@@ -3,7 +3,7 @@
  * -------
  * Root component.
  *
- * - Wraps everything in <AppProvider> so global state (theme, favourites)
+ * - Wraps everything in <AppProvider> so global state (favourites, cart, user)
  *   is available everywhere.
  * - Sets up react-router with a single route. The assignment says to use
  *   `react-router` (not `react-router-dom`) — in v7 the unified package

@@ -2,10 +2,14 @@ import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router'
 import { useApp } from '../context/AppContext'
 import MobileDrawer from './MobileDrawer'
+import CartDrawer from './CartDrawer'
+import LoginModal from './LoginModal'
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const { theme, toggleTheme, favouritesCount } = useApp()
+  const [cartOpen, setCartOpen] = useState(false)
+  const [loginOpen, setLoginOpen] = useState(false)
+  const { favouritesCount, cartCount, user } = useApp()
   const location = useLocation()
 
   useEffect(() => { setMenuOpen(false) }, [location.pathname])
@@ -49,8 +53,19 @@ export default function Navbar() {
             )}
           </button>
 
-          <button type="button" className="relative w-10 h-10 border-none bg-transparent text-white cursor-pointer rounded-xl text-base inline-flex items-center justify-center transition-[background] duration-180 hover:bg-white/12" onClick={toggleTheme} aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`} title="Toggle theme">
-            <i className={`fa-solid ${theme === 'light' ? 'fa-moon' : 'fa-sun'}`} aria-hidden="true" />
+          <button type="button" className="relative w-10 h-10 border-none bg-transparent text-white cursor-pointer rounded-xl text-base inline-flex items-center justify-center transition-[background] duration-180 hover:bg-white/12" onClick={() => setCartOpen(true)} aria-label={`Shopping cart (${cartCount} items)`} title="Shopping cart">
+            <i className={`fa-solid fa-cart-shopping ${cartCount > 0 ? 'text-[var(--color-accent)]' : ''}`} aria-hidden="true" />
+            {cartCount > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-[5px] rounded-full bg-white text-[var(--color-button)] text-[0.65rem] font-bold inline-flex items-center justify-center leading-none shadow-sm">{cartCount}</span>
+            )}
+          </button>
+
+          <button type="button" className="relative w-10 h-10 border-none bg-transparent text-white cursor-pointer rounded-xl text-base inline-flex items-center justify-center transition-[background] duration-180 hover:bg-white/12" onClick={() => setLoginOpen(true)} aria-label={user ? `Signed in as ${user.name}` : 'Sign in'} title={user ? user.name : 'Sign in'}>
+            {user ? (
+              <span className="w-7 h-7 rounded-full bg-white text-[var(--color-button)] text-[0.75rem] font-bold flex items-center justify-center shadow-sm">{user.name.charAt(0).toUpperCase()}</span>
+            ) : (
+              <i className="fa-solid fa-user" aria-hidden="true" />
+            )}
           </button>
 
           <button type="button" className={`md:hidden inline-flex flex-col justify-center gap-[5px] w-10 h-10 px-[9px] border-none bg-transparent cursor-pointer rounded-xl`} onClick={() => setMenuOpen((v) => !v)} aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} aria-controls="mobile-menu">
@@ -61,7 +76,9 @@ export default function Navbar() {
         </div>
       </div>
 
-      <MobileDrawer menuOpen={menuOpen} onClose={() => setMenuOpen(false)} favouritesCount={favouritesCount} />
+      <MobileDrawer menuOpen={menuOpen} onClose={() => setMenuOpen(false)} cartCount={cartCount} user={user} onOpenCart={() => { setMenuOpen(false); setCartOpen(true) }} onOpenLogin={() => { setMenuOpen(false); setLoginOpen(true) }} />
+      <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
+      <LoginModal open={loginOpen} onClose={() => setLoginOpen(false)} />
     </header>
   )
 }

@@ -1,6 +1,8 @@
+import { useApp } from '../context/AppContext'
 import { NavLink } from 'react-router'
 
-export default function MobileDrawer({ menuOpen, onClose, favouritesCount }) {
+export default function MobileDrawer({ menuOpen, onClose, cartCount, user, onOpenCart, onOpenLogin }) {
+  const { favouritesCount } = useApp()
   return (
     <>
       <div
@@ -18,12 +20,27 @@ export default function MobileDrawer({ menuOpen, onClose, favouritesCount }) {
           <NavLink to="/about" className={({ isActive }) => `flex items-center gap-3 px-4 py-3.5 rounded-xl no-underline text-[0.95rem] font-medium transition-[background,color] duration-150 hover:bg-[var(--color-bg)] hover:text-[var(--color-button)] ${isActive ? 'bg-[var(--color-bg)] text-[var(--color-button)]' : 'text-[var(--color-text)]'}`} onClick={onClose}>
             <i className="fa-solid fa-circle-info w-5 text-center text-[var(--color-text-muted)]" aria-hidden="true" /> About
           </NavLink>
+
+          <div className="border-t border-[var(--color-border)] my-2 pt-2" />
+
           <NavLink to="/" end className={({ isActive }) => `flex items-center gap-3 px-4 py-3.5 rounded-xl no-underline text-[0.95rem] font-medium transition-[background,color] duration-150 hover:bg-[var(--color-bg)] hover:text-[var(--color-button)] ${isActive ? 'bg-[var(--color-bg)] text-[var(--color-button)]' : 'text-[var(--color-text)]'}`} onClick={onClose}>
             <i className="fa-solid fa-heart w-5 text-center text-[var(--color-text-muted)]" aria-hidden="true" /> Favourites
             {favouritesCount > 0 && (
               <span className="ml-auto min-w-[18px] h-[18px] px-[5px] rounded-full bg-[var(--color-danger)] text-white text-[0.65rem] font-bold inline-flex items-center justify-center leading-none">{favouritesCount}</span>
             )}
           </NavLink>
+
+          <button type="button" className="flex items-center gap-3 px-4 py-3.5 rounded-xl no-underline w-full text-left text-[0.95rem] font-medium transition-[background,color] duration-150 hover:bg-[var(--color-bg)] hover:text-[var(--color-button)] text-[var(--color-text)] bg-transparent border-none cursor-pointer" onClick={onOpenCart}>
+            <i className="fa-solid fa-cart-shopping w-5 text-center text-[var(--color-text-muted)]" aria-hidden="true" /> Cart
+            {cartCount > 0 && (
+              <span className="ml-auto min-w-[18px] h-[18px] px-[5px] rounded-full bg-[var(--color-accent)] text-[var(--color-button)] text-[0.65rem] font-bold inline-flex items-center justify-center leading-none">{cartCount}</span>
+            )}
+          </button>
+
+          <button type="button" className="flex items-center gap-3 px-4 py-3.5 rounded-xl no-underline w-full text-left text-[0.95rem] font-medium transition-[background,color] duration-150 hover:bg-[var(--color-bg)] hover:text-[var(--color-button)] text-[var(--color-text)] bg-transparent border-none cursor-pointer" onClick={onOpenLogin}>
+            <i className="fa-solid fa-user w-5 text-center text-[var(--color-text-muted)]" aria-hidden="true" />
+            {user ? `Hi, ${user.name}` : 'Sign in'}
+          </button>
         </nav>
       </div>
 

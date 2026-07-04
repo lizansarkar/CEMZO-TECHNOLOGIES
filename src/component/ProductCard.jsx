@@ -2,8 +2,9 @@ import { useApp } from '../context/AppContext'
 import StarRating from './StarRating'
 
 export default function ProductCard({ product, onSelect }) {
-  const { isFavourite, toggleFavourite } = useApp()
+  const { isFavourite, toggleFavourite, addToCart, isInCart } = useApp()
   const fav = isFavourite(product.id)
+  const inCart = isInCart(product.id)
 
   return (
     <article
@@ -60,13 +61,30 @@ export default function ProductCard({ product, onSelect }) {
           </span>
         </div>
 
-        <div className="mt-auto pt-2.5 flex items-center justify-between">
+        <div className="mt-auto pt-2.5 flex items-center justify-between gap-2">
           <span className="text-xl font-bold text-[var(--color-button)] font-display">
             ${product.price.toFixed(2)}
           </span>
-          <span className="text-[0.8rem] font-semibold text-[var(--color-button)] inline-flex items-center gap-1.5 transition-[gap] duration-200 group-hover:gap-2.5">
-            View <i className="fa-solid fa-arrow-right" aria-hidden="true" />
-          </span>
+          <div className="flex items-center gap-1.5">
+            <button
+              type="button"
+              className={`w-8 h-8 rounded-full border-none cursor-pointer inline-flex items-center justify-center text-[0.8rem] transition-[background,color,transform] duration-150 active:scale-90 ${
+                inCart
+                  ? 'bg-[var(--color-accent)] text-[var(--color-button)]'
+                  : 'bg-[var(--color-button)] text-white hover:bg-[#0d3358]'
+              }`}
+              onClick={(e) => {
+                e.stopPropagation()
+                addToCart(product)
+              }}
+              aria-label={inCart ? 'In cart' : 'Add to cart'}
+            >
+              <i className={`fa-solid fa-${inCart ? 'check' : 'cart-plus'}`} aria-hidden="true" />
+            </button>
+            <span className="text-[0.8rem] font-semibold text-[var(--color-button)] inline-flex items-center gap-1.5 transition-[gap] duration-200 group-hover:gap-2.5">
+              View <i className="fa-solid fa-arrow-right" aria-hidden="true" />
+            </span>
+          </div>
         </div>
       </div>
     </article>

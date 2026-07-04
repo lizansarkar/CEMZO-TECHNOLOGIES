@@ -6,7 +6,7 @@ export default function ProductModal({ product, onClose }) {
   const overlayRef = useRef(null);
   const panelRef = useRef(null);
   const closeBtnRef = useRef(null);
-  const { isFavourite, toggleFavourite } = useApp();
+  const { isFavourite, toggleFavourite, addToCart, isInCart } = useApp();
 
   useEffect(() => {
     if (!product) return;
@@ -156,10 +156,15 @@ export default function ProductModal({ product, onClose }) {
             <div className="flex gap-2.5 flex-wrap mt-2">
               <button
                 type="button"
-                className="inline-flex items-center gap-2 border-none rounded-full px-[22px] py-[11px] text-[0.9rem] font-semibold font-body cursor-pointer transition-[background,color,transform,box-shadow] duration-180 active:scale-97 bg-[var(--color-button)] text-white hover:bg-[#0d3358] hover:shadow-[0_6px_18px_rgba(10,41,71,0.25)]"
+                className={`inline-flex items-center gap-2 border-none rounded-full px-[22px] py-[11px] text-[0.9rem] font-semibold font-body cursor-pointer transition-[background,color,transform,box-shadow] duration-180 active:scale-97 ${
+                  isInCart(product.id)
+                    ? 'bg-[var(--color-accent)] text-[var(--color-button)] hover:bg-[#e8be6e]'
+                    : 'bg-[var(--color-button)] text-white hover:bg-[#0d3358] hover:shadow-[0_6px_18px_rgba(10,41,71,0.25)]'
+                }`}
+                onClick={() => addToCart(product)}
+                aria-pressed={isInCart(product.id)}
               >
-                <i className="fa-solid fa-cart-plus" aria-hidden="true" /> Add
-                to cart
+                <i className={`fa-solid fa-${isInCart(product.id) ? 'check' : 'cart-plus'}`} aria-hidden="true" /> {isInCart(product.id) ? 'In cart' : 'Add to cart'}
               </button>
               <button
                 type="button"
