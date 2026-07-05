@@ -46,7 +46,7 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-1.5">
-          <button type="button" className="relative w-10 h-10 border-none bg-transparent text-white cursor-pointer rounded-xl text-base inline-flex items-center justify-center transition-[background] duration-180 hover:bg-white/12" aria-label={`Favourites (${favouritesCount})`} title="Favourites">
+          <button type="button" className="relative w-10 h-10 border-none text-white cursor-pointer rounded-xl text-base inline-flex items-center justify-center" aria-label={`Favourites (${favouritesCount})`} title="Favourites">
             <i className="fa-solid fa-heart" aria-hidden="true" />
             {favouritesCount > 0 && (
               <span className="absolute top-1 right-1 min-w-[18px] h-[18px] px-[5px] rounded-full bg-[var(--color-danger)] text-white text-[0.65rem] font-bold inline-flex items-center justify-center leading-none">{favouritesCount}</span>
