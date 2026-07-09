@@ -31,15 +31,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Toolbar */}
       <section className="max-w-[1400px] w-full mx-auto px-5 pt-6 pb-2 flex flex-col gap-4">
         {isUsingFallback && (
           <div className="flex items-center gap-3 bg-[#fff8e1] border border-[#f0c419] text-[#5a4500] px-4 py-3 rounded-xl text-[0.85rem] leading-relaxed" role="status">
             <i className="fa-solid fa-circle-info text-[#b8860b] text-base shrink-0" aria-hidden="true" />
             <span>
               Showing sample products — the live FakeStore API couldn't be
-              reached from this environment. In a normal browser the live
-              catalogue loads automatically.
+              reached from this environment.
             </span>
           </div>
         )}
