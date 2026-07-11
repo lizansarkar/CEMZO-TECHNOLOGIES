@@ -1,4 +1,4 @@
-import { useApp } from '../context/AppContext'
+import { useApp } from '../hooks/useApp'
 import StarRating from './StarRating'
 
 export default function ProductCard({ product, onSelect }) {

@@ -22,33 +22,35 @@ export function useProducts({ pageSize = 8 } = {}) {
    * Initial load: products + categories in parallel so the UI can render
    * the filter bar as soon as both resolve.
    */
-  const loadInitialData = useCallback(async () => {
-    setIsLoading(true)
-    setError(null)
-    try {
-      const [productData, categoryData] = await Promise.all([
-        fetchAllProducts(),
-        fetchCategories(),
-      ])
-      setProducts(productData)
-      setCategories(categoryData)
-      // If the live API failed and the service fell back to mock data,
-      // surface a subtle notice to the user.
-      const productCount = Array.isArray(productData) ? productData.length : 0
-      setIsUsingFallback(productCount > 0 && productCount <= 25)
-    } catch (err) {
-      setError(err.message || 'Something went wrong.')
-      setProducts([])
-      setCategories([])
-      setIsUsingFallback(false)
-    } finally {
-      setIsLoading(false)
-    }
-  }, [])
+  const [loadKey, setLoadKey] = useState(0)
 
   useEffect(() => {
-    loadInitialData()
-  }, [loadInitialData])
+    let cancelled = false
+    async function load() {
+      try {
+        const [productData, categoryData] = await Promise.all([
+          fetchAllProducts(),
+          fetchCategories(),
+        ])
+        if (cancelled) return
+        setProducts(productData)
+        setCategories(categoryData)
+        const productCount = Array.isArray(productData) ? productData.length : 0
+        setIsUsingFallback(productCount > 0 && productCount <= 25)
+        setError(null)
+      } catch (err) {
+        if (cancelled) return
+        setError(err.message || 'Something went wrong.')
+        setProducts([])
+        setCategories([])
+        setIsUsingFallback(false)
+      } finally {
+        if (!cancelled) setIsLoading(false)
+      }
+    }
+    load()
+    return () => { cancelled = true }
+  }, [loadKey])
 
   /**
    * Derived list: filter by category, then filter by search term (case-
@@ -75,9 +77,11 @@ export function useProducts({ pageSize = 8 } = {}) {
   const totalPages = Math.max(1, Math.ceil(filteredProducts.length / pageSize))
 
   // Keep currentPage inside valid range when filters shrink the list.
-  useEffect(() => {
+  const [prevTotalPages, setPrevTotalPages] = useState(totalPages)
+  if (totalPages !== prevTotalPages) {
     if (currentPage > totalPages) setCurrentPage(1)
-  }, [currentPage, totalPages])
+    setPrevTotalPages(totalPages)
+  }
 
   const paginatedProducts = useMemo(() => {
     const start = (currentPage - 1) * pageSize
@@ -110,8 +114,10 @@ export function useProducts({ pageSize = 8 } = {}) {
   }, [])
 
   const retry = useCallback(() => {
-    loadInitialData()
-  }, [loadInitialData])
+    setIsLoading(true)
+    setError(null)
+    setLoadKey((k) => k + 1)
+  }, [])
 
   return {
     // data

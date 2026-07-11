@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState, useCallback } from 'react'
+import { createContext, useEffect, useMemo, useState, useCallback } from 'react'
 
 const AppContext = createContext(null)
 
@@ -142,18 +142,6 @@ export function AppProvider({ children }) {
   )
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
-}
-
-/**
- * Convenience hook — throws a helpful error if used outside the provider,
- * which is much easier to debug than a silent `undefined`.
- */
-export function useApp() {
-  const ctx = useContext(AppContext)
-  if (!ctx) {
-    throw new Error('useApp must be used inside an <AppProvider>.')
-  }
-  return ctx
 }
 
 export default AppContext

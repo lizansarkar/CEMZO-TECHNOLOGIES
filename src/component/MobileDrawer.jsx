@@ -1,4 +1,4 @@
-import { useApp } from '../context/AppContext'
+import { useApp } from '../hooks/useApp'
 import { NavLink } from 'react-router'
 
 export default function MobileDrawer({ menuOpen, onClose, cartCount, user, onOpenCart, onOpenLogin }) {

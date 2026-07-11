@@ -1,24 +1,26 @@
 import { useEffect, useRef, useState } from 'react'
-import { useApp } from '../context/AppContext'
+import { useApp } from '../hooks/useApp'
 
 export default function LoginModal({ open, onClose }) {
   const { user, login, logout } = useApp()
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const overlayRef = useRef(null)
+  const nameRef = useRef(null)
   const emailRef = useRef(null)
 
   useEffect(() => {
     if (!open) return
-    emailRef.current?.focus()
+    nameRef.current?.focus()
     const onKey = (e) => e.key === 'Escape' && onClose()
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
   }, [open, onClose])
 
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = open ? 'hidden' : prevOverflow
+    return () => { document.body.style.overflow = prevOverflow }
   }, [open])
 
   if (!open) return null
@@ -69,11 +71,11 @@ export default function LoginModal({ open, onClose }) {
             <form onSubmit={handleLogin} className="flex flex-col gap-4">
               <div>
                 <label htmlFor="login-name" className="block text-[0.85rem] font-medium text-[var(--color-text)] mb-1.5">Name</label>
-                <input id="login-name" ref={emailRef} type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full px-4 py-[11px] rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] text-[0.95rem] text-[var(--color-text)] outline-none transition-[border-color] duration-180 focus:border-[var(--color-button)]" placeholder="Your name" required />
+                <input id="login-name" ref={nameRef} type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full px-4 py-[11px] rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] text-[0.95rem] text-[var(--color-text)] outline-none transition-[border-color] duration-180 focus:border-[var(--color-button)]" placeholder="Your name" required />
               </div>
               <div>
                 <label htmlFor="login-email" className="block text-[0.85rem] font-medium text-[var(--color-text)] mb-1.5">Email</label>
-                <input id="login-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-4 py-[11px] rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] text-[0.95rem] text-[var(--color-text)] outline-none transition-[border-color] duration-180 focus:border-[var(--color-button)]" placeholder="you@example.com" required />
+                <input id="login-email" ref={emailRef} type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-4 py-[11px] rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] text-[0.95rem] text-[var(--color-text)] outline-none transition-[border-color] duration-180 focus:border-[var(--color-button)]" placeholder="you@example.com" required />
               </div>
               <button type="submit" className="w-full py-[13px] rounded-full border-none bg-[var(--color-button)] text-white text-[0.95rem] font-semibold cursor-pointer transition-[background,transform] duration-180 active:scale-97 hover:bg-[#0d3358]">
                 <i className="fa-solid fa-right-to-bracket mr-2" aria-hidden="true" /> Sign in

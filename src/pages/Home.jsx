@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useProducts } from '../hooks/userProducts'
+import { useProducts } from '../hooks/useProducts'
 import SearchBar from '../component/SearchBar'
 import CategoryFilter from '../component/CategoryFilter'
 import ProductList from '../component/ProductList'

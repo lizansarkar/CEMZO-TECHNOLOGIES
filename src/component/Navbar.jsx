@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router'
-import { useApp } from '../context/AppContext'
+import { useApp } from '../hooks/useApp'
 import MobileDrawer from './MobileDrawer'
 import CartDrawer from './CartDrawer'
 import LoginModal from './LoginModal'
@@ -12,11 +12,16 @@ export default function Navbar() {
   const { favouritesCount, cartCount, user } = useApp()
   const location = useLocation()
 
-  useEffect(() => { setMenuOpen(false) }, [location.pathname])
+  const [prevPathname, setPrevPathname] = useState(location.pathname)
+  if (location.pathname !== prevPathname) {
+    setMenuOpen(false)
+    setPrevPathname(location.pathname)
+  }
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = menuOpen ? 'hidden' : prevOverflow
+    return () => { document.body.style.overflow = prevOverflow }
   }, [menuOpen])
 
   useEffect(() => {

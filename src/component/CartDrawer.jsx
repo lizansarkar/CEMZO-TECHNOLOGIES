@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { useApp } from '../context/AppContext'
+import { useApp } from '../hooks/useApp'
 
 export default function CartDrawer({ open, onClose }) {
   const { cart, removeFromCart, updateQuantity, cartTotal } = useApp()
@@ -13,8 +13,9 @@ export default function CartDrawer({ open, onClose }) {
   }, [open, onClose])
 
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = open ? 'hidden' : prevOverflow
+    return () => { document.body.style.overflow = prevOverflow }
   }, [open])
 
   return (

@@ -1,23 +1,18 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import debounce from '../utils/debounce'
 
 export default function SearchBar({ value, onChange, placeholder = 'Search products…' }) {
   const [inputValue, setInputValue] = useState(value || '')
 
-  const debouncedChange = useRef(
-    debounce((query) => onChange(query), 300)
-  ).current
-
-  useEffect(() => {
-    if ((value || '') !== inputValue) {
-      setInputValue(value || '')
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value])
+  const [debouncedChange] = useState(() => debounce((query) => onChange(query), 300))
 
   useEffect(() => {
     return () => debouncedChange.cancel()
   }, [debouncedChange])
+
+  if (value !== inputValue) {
+    setInputValue(value || '')
+  }
 
   const handleChange = (e) => {
     const next = e.target.value

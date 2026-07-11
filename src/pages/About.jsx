@@ -1,3 +1,5 @@
+import { Link } from 'react-router'
+
 export default function About() {
   const stats = [
     { icon: 'fa-box', value: '10K+', label: 'Products' },
@@ -246,13 +248,13 @@ export default function About() {
             Browse our catalogue and discover thousands of amazing products
             at unbeatable prices.
           </p>
-          <a
-            href="/catalogue"
+          <Link
+            to="/catalogue"
             className="inline-flex items-center gap-2 bg-[var(--color-accent)] text-[#06202b] font-bold px-8 py-3.5 rounded-full text-base no-underline transition-all duration-200 hover:bg-white hover:shadow-lg hover:scale-[1.02]"
           >
             <i className="fa-solid fa-arrow-right" aria-hidden="true" />
             Explore Catalogue
-          </a>
+          </Link>
         </div>
       </section>
 
