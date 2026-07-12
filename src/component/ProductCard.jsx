@@ -33,7 +33,7 @@ export default function ProductCard({ product, onSelect }) {
           aria-pressed={fav}
           onClick={(e) => {
             e.stopPropagation()
-            toggleFavourite(product.id)
+            toggleFavourite(product)
           }}
         >
           <i className={`fa-${fav ? 'solid' : 'regular'} fa-heart`} aria-hidden="true" />

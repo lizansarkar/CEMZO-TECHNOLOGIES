@@ -133,7 +133,7 @@ export default function ProductModal({ product, onClose }) {
                     ? "text-[var(--color-danger)] border-[var(--color-danger)] bg-transparent"
                     : "bg-transparent text-[var(--color-button)] border-[var(--color-button)] hover:bg-[var(--color-button)] hover:text-white"
                 }`}
-                onClick={() => toggleFavourite(product.id)}
+                onClick={() => toggleFavourite(product)}
                 aria-pressed={fav}
               >
                 <i

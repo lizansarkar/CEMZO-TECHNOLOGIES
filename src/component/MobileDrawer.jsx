@@ -1,7 +1,7 @@
 import { useApp } from '../hooks/useApp'
 import { NavLink } from 'react-router'
 
-export default function MobileDrawer({ menuOpen, onClose, cartCount, user, onOpenCart, onOpenLogin }) {
+export default function MobileDrawer({ menuOpen, onClose, cartCount, user, onOpenCart, onOpenLogin, onOpenFavourites }) {
   const { favouritesCount } = useApp()
   return (
     <>
@@ -23,12 +23,12 @@ export default function MobileDrawer({ menuOpen, onClose, cartCount, user, onOpe
 
           <div className="border-t border-[var(--color-border)] my-2 pt-2" />
 
-          <NavLink to="/" end className={({ isActive }) => `flex items-center gap-3 px-4 py-3.5 rounded-xl no-underline text-[0.95rem] font-medium transition-[background,color] duration-150 hover:bg-[var(--color-bg)] hover:text-[var(--color-button)] ${isActive ? 'bg-[var(--color-bg)] text-[var(--color-button)]' : 'text-[var(--color-text)]'}`} onClick={onClose}>
+          <button type="button" className="flex items-center gap-3 px-4 py-3.5 rounded-xl no-underline w-full text-left text-[0.95rem] font-medium transition-[background,color] duration-150 hover:bg-[var(--color-bg)] hover:text-[var(--color-button)] text-[var(--color-text)] bg-transparent border-none cursor-pointer" onClick={() => { onClose(); onOpenFavourites(); }}>
             <i className="fa-solid fa-heart w-5 text-center text-[var(--color-text-muted)]" aria-hidden="true" /> Favourites
             {favouritesCount > 0 && (
               <span className="ml-auto min-w-[18px] h-[18px] px-[5px] rounded-full bg-[var(--color-danger)] text-white text-[0.65rem] font-bold inline-flex items-center justify-center leading-none">{favouritesCount}</span>
             )}
-          </NavLink>
+          </button>
 
           <button type="button" className="flex items-center gap-3 px-4 py-3.5 rounded-xl no-underline w-full text-left text-[0.95rem] font-medium transition-[background,color] duration-150 hover:bg-[var(--color-bg)] hover:text-[var(--color-button)] text-[var(--color-text)] bg-transparent border-none cursor-pointer" onClick={onOpenCart}>
             <i className="fa-solid fa-cart-shopping w-5 text-center text-[var(--color-text-muted)]" aria-hidden="true" /> Cart

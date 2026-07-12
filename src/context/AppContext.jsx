@@ -22,16 +22,18 @@ export function AppProvider({ children }) {
     localStorage.setItem(FAV_STORAGE_KEY, JSON.stringify(favourites))
   }, [favourites])
 
-  const toggleFavourite = useCallback((productId) => {
-    setFavourites((prev) =>
-      prev.includes(productId)
-        ? prev.filter((id) => id !== productId)
-        : [...prev, productId]
-    )
+  const toggleFavourite = useCallback((product) => {
+    setFavourites((prev) => {
+      const exists = prev.find((item) => item.productId === product.id)
+      if (exists) {
+        return prev.filter((item) => item.productId !== product.id)
+      }
+      return [...prev, { productId: product.id, product }]
+    })
   }, [])
 
   const isFavourite = useCallback(
-    (productId) => favourites.includes(productId),
+    (productId) => favourites.some((item) => item.productId === productId),
     [favourites]
   )
 
@@ -121,12 +123,17 @@ export function AppProvider({ children }) {
     setUser(null)
   }, [])
 
+  const removeFromFavourites = useCallback((productId) => {
+    setFavourites((prev) => prev.filter((item) => item.productId !== productId))
+  }, [])
+
   const value = useMemo(
     () => ({
       favourites,
       toggleFavourite,
       isFavourite,
       favouritesCount: favourites.length,
+      removeFromFavourites,
       cart,
       addToCart,
       removeFromCart,
@@ -138,7 +145,7 @@ export function AppProvider({ children }) {
       login,
       logout,
     }),
-    [favourites, toggleFavourite, isFavourite, cart, addToCart, removeFromCart, updateQuantity, cartCount, cartTotal, isInCart, user, login, logout]
+    [favourites, toggleFavourite, isFavourite, removeFromFavourites, cart, addToCart, removeFromCart, updateQuantity, cartCount, cartTotal, isInCart, user, login, logout]
   )
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
