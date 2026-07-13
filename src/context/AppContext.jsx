@@ -1,12 +1,33 @@
 import { createContext, useEffect, useMemo, useState, useCallback } from 'react'
+import { fetchAllProducts, fetchCategories } from '../services/productService'
 
 const AppContext = createContext(null)
 
 const FAV_STORAGE_KEY = 'shopverse:favourites'
 const CART_STORAGE_KEY = 'shopverse:cart'
 const USER_STORAGE_KEY = 'shopverse:user'
+const THEME_STORAGE_KEY = 'shopverse:theme'
 
 export function AppProvider({ children }) {
+  // ---- Theme ----
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === 'undefined') return 'light'
+    try {
+      const stored = localStorage.getItem(THEME_STORAGE_KEY)
+      if (stored === 'dark' || stored === 'light') return stored
+    } catch { /* ignore */ }
+    return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  })
+
+  useEffect(() => {
+    localStorage.setItem(THEME_STORAGE_KEY, theme)
+    document.documentElement.setAttribute('data-theme', theme)
+  }, [theme])
+
+  const toggleTheme = useCallback(() => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
+  }, [])
+
   // ---- Favourites ----
   const [favourites, setFavourites] = useState(() => {
     if (typeof window === 'undefined') return []
@@ -123,12 +144,48 @@ export function AppProvider({ children }) {
     setUser(null)
   }, [])
 
+  // ---- Products (shared across pages) ----
+  const [products, setProducts] = useState([])
+  const [categories, setCategories] = useState([])
+  const [productsLoading, setProductsLoading] = useState(true)
+  const [productsError, setProductsError] = useState(null)
+  const [isUsingFallback, setIsUsingFallback] = useState(false)
+
+  const loadProducts = useCallback(async () => {
+    setProductsLoading(true)
+    setProductsError(null)
+    try {
+      const [productData, categoryData] = await Promise.all([
+        fetchAllProducts(),
+        fetchCategories(),
+      ])
+      setProducts(productData)
+      setCategories(categoryData)
+      const count = Array.isArray(productData) ? productData.length : 0
+      setIsUsingFallback(count > 0 && count <= 25)
+    } catch (err) {
+      setProductsError(err.message || 'Something went wrong.')
+      setProducts([])
+      setCategories([])
+      setIsUsingFallback(false)
+    } finally {
+      setProductsLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    loadProducts()
+  }, [loadProducts])
+
   const removeFromFavourites = useCallback((productId) => {
     setFavourites((prev) => prev.filter((item) => item.productId !== productId))
   }, [])
 
   const value = useMemo(
     () => ({
+      theme,
+      toggleTheme,
       favourites,
       toggleFavourite,
       isFavourite,
@@ -144,8 +201,14 @@ export function AppProvider({ children }) {
       user,
       login,
       logout,
+      products,
+      categories,
+      productsLoading,
+      productsError,
+      isUsingFallback,
+      reloadProducts: loadProducts,
     }),
-    [favourites, toggleFavourite, isFavourite, removeFromFavourites, cart, addToCart, removeFromCart, updateQuantity, cartCount, cartTotal, isInCart, user, login, logout]
+    [theme, toggleTheme, favourites, toggleFavourite, isFavourite, removeFromFavourites, cart, addToCart, removeFromCart, updateQuantity, cartCount, cartTotal, isInCart, user, login, logout, products, categories, productsLoading, productsError, isUsingFallback, loadProducts]
   )
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>

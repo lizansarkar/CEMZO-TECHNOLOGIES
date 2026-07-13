@@ -32,29 +32,36 @@ button	#0A2947	primary buttons / navbar
 Plus derived tokens (border, muted text, danger, accent) and a dark-theme override applied via [data-theme="dark"] on <html>.
 
 🧱 Tech stack
-React 18 (functional components only — no class components)
-Vite 6 (dev server + build)
-Axios 1.7 (HTTP client, isolated in services/)
+React 19 (functional components only — no class components)
+Vite 8 (dev server + build)
+Axios 1.18 (HTTP client, isolated in services/)
 react-router v7 (the unified react-router package, not react-router-dom)
-Plain CSS (one .css per component + global theme tokens — no Tailwind)
+Tailwind CSS v4 (via @tailwindcss/vite plugin, with custom design tokens)
 Font Awesome 6 via CDN
 Inter + Plus Jakarta Sans for typography
 📁 Folder structure
 text
 
 src/
-├── components/
+├── component/
 │   ├── ProductCard.jsx
 │   ├── ProductList.jsx
 │   ├── SearchBar.jsx
 │   ├── CategoryFilter.jsx
 │   ├── ProductModal.jsx
 │   ├── Loader.jsx
-│   ├── Navbar.jsx        ← bonus (mobile hamburger toggle)
+│   ├── Navbar.jsx        ← bonus (mobile hamburger toggle + theme toggle)
+│   ├── MobileDrawer.jsx  ← bonus (mobile navigation drawer)
+│   ├── CartDrawer.jsx    ← bonus (shopping cart drawer)
+│   ├── FavouritesDrawer.jsx ← bonus (favourites drawer)
+│   ├── LoginModal.jsx    ← bonus (login/logout modal)
+│   ├── StarRating.jsx    ← star rating display
 │   └── Pagination.jsx    ← bonus
 │
 ├── pages/
-│   └── Home.jsx
+│   ├── Home.jsx
+│   ├── Catalogue.jsx
+│   └── About.jsx
 │
 ├── services/
 │   ├── productService.js   ← all Axios logic
@@ -64,7 +71,7 @@ src/
 │   └── useProducts.js      ← data + UI state (search, category, pagination, modal)
 │
 ├── context/
-│   └── AppContext.jsx      ← global state (theme + favourites)
+│   └── AppContext.jsx      ← global state (theme + favourites + cart + user + products)
 │
 ├── utils/
 │   └── debounce.js         ← 300ms debounce helper

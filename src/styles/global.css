@@ -51,6 +51,30 @@ body {
 #root { min-height: 100vh; }
 img { max-width: 100%; display: block; }
 
+[data-theme="dark"] {
+  --color-bg: #0f1720;
+  --color-text: #e2e8f0;
+  --color-button: #90caf9;
+  --color-text-muted: #94a3b8;
+  --color-border: #2a3a4a;
+  --color-danger: #f87171;
+  --color-accent: #fbbf24;
+}
+
+[data-theme="dark"] body {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+[data-theme="dark"] .bg-white,
+[data-theme="dark"] .bg-white\/85 {
+  background-color: #1e293b;
+}
+
+[data-theme="dark"] header {
+  background: #061525;
+}
+
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 999px; }

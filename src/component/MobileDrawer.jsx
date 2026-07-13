@@ -2,7 +2,7 @@ import { useApp } from '../hooks/useApp'
 import { NavLink } from 'react-router'
 
 export default function MobileDrawer({ menuOpen, onClose, cartCount, user, onOpenCart, onOpenLogin, onOpenFavourites }) {
-  const { favouritesCount } = useApp()
+  const { favouritesCount, theme, toggleTheme } = useApp()
   return (
     <>
       <div
@@ -40,6 +40,13 @@ export default function MobileDrawer({ menuOpen, onClose, cartCount, user, onOpe
           <button type="button" className="flex items-center gap-3 px-4 py-3.5 rounded-xl no-underline w-full text-left text-[0.95rem] font-medium transition-[background,color] duration-150 hover:bg-[var(--color-bg)] hover:text-[var(--color-button)] text-[var(--color-text)] bg-transparent border-none cursor-pointer" onClick={onOpenLogin}>
             <i className="fa-solid fa-user w-5 text-center text-[var(--color-text-muted)]" aria-hidden="true" />
             {user ? `Hi, ${user.name}` : 'Sign in'}
+          </button>
+
+          <div className="border-t border-[var(--color-border)] my-2 pt-2" />
+
+          <button type="button" className="flex items-center gap-3 px-4 py-3.5 rounded-xl no-underline w-full text-left text-[0.95rem] font-medium transition-[background,color] duration-150 hover:bg-[var(--color-bg)] hover:text-[var(--color-button)] text-[var(--color-text)] bg-transparent border-none cursor-pointer" onClick={toggleTheme}>
+            <i className={`fa-solid ${theme === 'dark' ? 'fa-sun' : 'fa-moon'} w-5 text-center text-[var(--color-text-muted)]`} aria-hidden="true" />
+            {theme === 'dark' ? 'Light mode' : 'Dark mode'}
           </button>
         </nav>
       </div>

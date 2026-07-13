@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router'
+import { Link, NavLink } from 'react-router'
 import { useApp } from '../hooks/useApp'
 import MobileDrawer from './MobileDrawer'
 import CartDrawer from './CartDrawer'
@@ -11,14 +11,7 @@ export default function Navbar() {
   const [cartOpen, setCartOpen] = useState(false)
   const [favouritesOpen, setFavouritesOpen] = useState(false)
   const [loginOpen, setLoginOpen] = useState(false)
-  const { favouritesCount, cartCount, user } = useApp()
-  const location = useLocation()
-
-  const [prevPathname, setPrevPathname] = useState(location.pathname)
-  if (location.pathname !== prevPathname) {
-    setMenuOpen(false)
-    setPrevPathname(location.pathname)
-  }
+  const { favouritesCount, cartCount, user, theme, toggleTheme } = useApp()
 
   useEffect(() => {
     const prevOverflow = document.body.style.overflow
@@ -73,6 +66,10 @@ export default function Navbar() {
             ) : (
               <i className="fa-solid fa-user" aria-hidden="true" />
             )}
+          </button>
+
+          <button type="button" className="w-10 h-10 border-none bg-transparent text-white cursor-pointer rounded-xl text-base inline-flex items-center justify-center transition-[background] duration-180 hover:bg-white/12" onClick={toggleTheme} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`} title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
+            <i className={`fa-solid ${theme === 'dark' ? 'fa-sun' : 'fa-moon'}`} aria-hidden="true" />
           </button>
 
           <button type="button" className={`md:hidden inline-flex flex-col justify-center gap-[5px] w-10 h-10 px-[9px] border-none bg-transparent cursor-pointer rounded-xl`} onClick={() => setMenuOpen((v) => !v)} aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} aria-controls="mobile-menu">
