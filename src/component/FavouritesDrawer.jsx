@@ -50,7 +50,7 @@ export default function FavouritesDrawer({ open, onClose }) {
             </div>
           ) : (
             <ul className="list-none p-0 m-0 flex flex-col gap-3">
-              {favourites.map((item) => (
+              {favourites.filter((item) => item.product).map((item) => (
                 <li key={item.productId} className="flex gap-3 p-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)]">
                   <div className="w-20 h-20 rounded-lg bg-white flex items-center justify-center p-2 shrink-0 border border-[var(--color-border)]">
                     <img src={item.product.image} alt={item.product.title} className="max-w-full max-h-full object-contain mix-blend-multiply" />

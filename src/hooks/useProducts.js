@@ -41,16 +41,12 @@ export function useProducts({ pageSize = 8 } = {}) {
   // ----- Pagination slice -----
   const totalPages = Math.max(1, Math.ceil(filteredProducts.length / pageSize))
 
-  // Keep currentPage inside valid range when filters shrink the list.
-  // Using conditional render-phase update (React-idiomatic derived state).
-  if (currentPage > totalPages) {
-    setCurrentPage(1)
-  }
+  const effectivePage = currentPage > totalPages ? totalPages : currentPage
 
   const paginatedProducts = useMemo(() => {
-    const start = (currentPage - 1) * pageSize
+    const start = (effectivePage - 1) * pageSize
     return filteredProducts.slice(start, start + pageSize)
-  }, [filteredProducts, currentPage, pageSize])
+  }, [filteredProducts, effectivePage, pageSize])
 
   // ----- Actions exposed to the UI -----
   const handleSearch = useCallback((query) => {
@@ -89,7 +85,7 @@ export function useProducts({ pageSize = 8 } = {}) {
     // ui state
     searchQuery,
     activeCategory,
-    currentPage,
+    currentPage: effectivePage,
     totalPages,
     selectedProduct,
     // actions
