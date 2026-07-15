@@ -36,8 +36,7 @@ export default function Home() {
           <div className="flex items-center gap-3 bg-[#fff8e1] border border-[#f0c419] text-[#5a4500] px-4 py-3 rounded-xl text-[0.85rem] leading-relaxed" role="status">
             <i className="fa-solid fa-circle-info text-[#b8860b] text-base shrink-0" aria-hidden="true" />
             <span>
-              Showing sample products — the live FakeStore API couldn't be
-              reached from this environment.
+              The API is currently unavailable. Displaying fallback data. Please try again later.
             </span>
           </div>
         )}
