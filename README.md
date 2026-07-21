@@ -1,146 +1,158 @@
-ShopVerse — Product Listing App
-A responsive React + Vite application for the React Developer Intern Technical Assignment. Fetches products from the FakeStore API and provides search, category filtering, a product details modal, pagination, dark/light theme, and a fully responsive layout.
+# VoltMart — Premium Electronics Store
 
-Desktop preview
+A premium retail landing page built with React 19 + Vite 8 + Tailwind CSS v4. Features a modern homepage with hero, product collection, cart, favourites, login, testimonials, and newsletter — all with Framer Motion animations and full responsiveness.
 
-✨ Features
-Mandatory
-Product listing — image, title, price, category, rating (stars + count) on every card
-Case-insensitive search by product title (with clear × button)
-Category filter — accessible pill tabs, categories sourced live from the API
-Product details modal — overlay click-to-close, ESC, focus trap, body-scroll lock, focus restoration
-Loading & error states — animated skeleton grid while loading; friendly error panel with retry; empty-state when filters match nothing
-Responsive grid — 1 column (mobile) → 2 (≥600px) → 3 (≥960px) → 4 (≥1280px)
-Font Awesome 6 icons throughout
-Clean architecture — services / hooks / pages / components with strict separation of concerns
-Bonus
-Debounced search (300 ms) with .cancel() cleanup on unmount
-Pagination (8 per page) with compact numbered window, Prev/Next, keyboard-accessible
-Context API for global state (theme + favourites), persisted to localStorage
-Dark / Light theme toggle in the navbar
-Mobile hamburger navbar with slide-in drawer, body-scroll lock, ESC/resize auto-close
-Resilience
-Graceful fallback to bundled sample data when the live API is unreachable (e.g. behind strict proxies / headless browsers). A subtle yellow banner surfaces this state. In a normal browser the live API is always used.
-🎨 Design tokens
-Token
-Value
-Used for
-background	#EEEEEE	page background
-text	#06202B	body text
-button	#0A2947	primary buttons / navbar
+---
 
-Plus derived tokens (border, muted text, danger, accent) and a dark-theme override applied via [data-theme="dark"] on <html>.
+## Features
 
-🧱 Tech stack
-React 19 (functional components only — no class components)
-Vite 8 (dev server + build)
-Axios 1.18 (HTTP client, isolated in services/)
-react-router v7 (the unified react-router package, not react-router-dom)
-Tailwind CSS v4 (via @tailwindcss/vite plugin, with custom design tokens)
-Font Awesome 6 via CDN
-Inter + Plus Jakarta Sans for typography
-📁 Folder structure
-text
+### Homepage Sections
+- **Sticky Navbar** — SVG logo, navigation links, favourites/cart/login buttons, responsive mobile drawer
+- **Hero Section** — Large banner with headline, CTAs, stats, floating delivery card
+- **Featured Categories** — 6 electronics category cards with hover animations
+- **Product Collection** — 12 products with category filter tabs, beautiful product cards
+- **Why Choose Us** — 4 feature cards (Genuine Products, Express Delivery, 30-Day Returns, Secure Payments)
+- **Best Sellers** — Highlighted top-selling electronics
+- **Testimonials** — 3 customer review cards with star ratings
+- **Newsletter** — Email subscribe form with success state
+- **Premium Footer** — Company info, quick links, contact details, social icons
 
+### Interactive Features
+- **Shopping Cart** — Add/remove products, quantity controls, running total, checkout button
+- **Favourites** — Toggle heart on any product card, dedicated favourites drawer
+- **Login/Register** — Modal form with user avatar display
+- **Category Filter** — Filter products by Laptops, Phones, Audio, TVs, Accessories, Wearables
+- **Framer Motion Animations** — Scroll-triggered fade/slide/stagger on every section
+- **localStorage Persistence** — Cart, favourites, and user data survive page refreshes
+
+### Design
+- **Premium Aesthetic** — Large whitespace, rounded corners, soft shadows, subtle gradients
+- **Glassmorphism** — Navbar backdrop blur on scroll
+- **Micro Interactions** — Hover scale, button press, card lift, floating elements
+- **Responsive** — Mobile, tablet, laptop, desktop, large desktop
+
+---
+
+## Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| React 19 | UI (functional components only) |
+| Vite 8 | Dev server + production build |
+| Tailwind CSS v4 | Utility-first styling via `@tailwindcss/vite` |
+| Framer Motion | Scroll & hover animations |
+| Font Awesome 6 | Icons (CDN) |
+| Inter + Plus Jakarta Sans | Typography (Google Fonts) |
+
+---
+
+## Design Tokens
+
+| Token | Light | Used for |
+|---|---|---|
+| `--color-bg` | `#EEEEEE` | Page background |
+| `--color-text` | `#06202B` | Body text |
+| `--color-button` | `#0A2947` | Primary buttons / navbar / accents |
+| `--color-text-muted` | `#5B6F78` | Secondary text |
+| `--color-border` | `#D8DDE0` | Borders & dividers |
+| `--color-danger` | `#D64545` | Error states / remove actions |
+| `--color-accent` | `#FFD27A` | Highlights / badges / CTAs |
+
+---
+
+## Folder Structure
+
+```
 src/
 ├── component/
-│   ├── ProductCard.jsx
-│   ├── ProductList.jsx
-│   ├── SearchBar.jsx
-│   ├── CategoryFilter.jsx
-│   ├── ProductModal.jsx
-│   ├── Loader.jsx
-│   ├── Navbar.jsx        ← bonus (mobile hamburger toggle + theme toggle)
-│   ├── MobileDrawer.jsx  ← bonus (mobile navigation drawer)
-│   ├── CartDrawer.jsx    ← bonus (shopping cart drawer)
-│   ├── FavouritesDrawer.jsx ← bonus (favourites drawer)
-│   ├── LoginModal.jsx    ← bonus (login/logout modal)
-│   ├── StarRating.jsx    ← star rating display
-│   └── Pagination.jsx    ← bonus
-│
-├── pages/
-│   ├── Home.jsx
-│   ├── Catalogue.jsx
-│   └── About.jsx
-│
-├── services/
-│   ├── productService.js   ← all Axios logic
-│   └── mockData.js         ← fallback dataset
-│
-├── hooks/
-│   └── useProducts.js      ← data + UI state (search, category, pagination, modal)
+│   ├── Navbar.jsx            ← sticky nav + SVG logo + cart/fav/login + mobile drawer
+│   ├── HeroSection.jsx       ← hero banner with stats
+│   ├── FeaturedCategories.jsx ← 6 category cards
+│   ├── FeaturedProducts.jsx  ← filterable product grid
+│   ├── ProductCard.jsx       ← reusable card with fav/cart
+│   ├── WhyChooseUs.jsx       ← 4 feature cards
+│   ├── BestSellers.jsx       ← top-selling products
+│   ├── Testimonials.jsx      ← 3 customer reviews
+│   ├── Newsletter.jsx        ← email subscribe form
+│   ├── Footer.jsx            ← 4-column footer
+│   ├── CartDrawer.jsx        ← slide-in shopping cart
+│   ├── FavouritesDrawer.jsx  ← slide-in favourites list
+│   ├── LoginModal.jsx        ← sign in / register modal
+│   └── StarRating.jsx        ← reusable star rating display
 │
 ├── context/
-│   └── AppContext.jsx      ← global state (theme + favourites + cart + user + products)
+│   └── AppContext.jsx         ← cart, favourites, user state + localStorage
 │
-├── utils/
-│   └── debounce.js         ← 300ms debounce helper
+├── hooks/
+│   └── useApp.js              ← convenience hook for AppContext
+│
+├── data/
+│   └── products.js            ← 12 electronics products, categories, testimonials
 │
 ├── styles/
-│   └── global.css          ← design tokens, reset, dark theme, a11y
+│   └── global.css             ← design tokens, utilities, animations, a11y
 │
 ├── App.jsx
 └── main.jsx
-🚀 Getting started
-bash
+```
 
+---
+
+## Getting Started
+
+```bash
 # 1. Install dependencies
 npm install
 
-# 2. Start the dev server (http://localhost:3000)
+# 2. Start the dev server
 npm run dev
 
-# 3. Build for production (outputs to dist/)
+# 3. Build for production
 npm run build
 
-# 4. Preview the production build locally
+# 4. Preview the production build
 npm run preview
-♿ Accessibility
-Modal: role="dialog" + aria-modal, focus trap, ESC-to-close, body scroll lock, focus restoration to trigger
-Pagination: real <button> elements with aria-current="page" on the active page
-Category filter: aria-pressed on each pill tab
-Navbar hamburger: aria-expanded + aria-controls, animated to "X" when open
-All interactive elements reachable by keyboard; visible focus rings
-prefers-reduced-motion respected (animations disabled for users who request it)
-📱 Responsive breakpoints
-Breakpoint
-Grid columns
-Navbar
-< 600px	1	hamburger only
-≥ 600px	2	hamburger only
-≥ 768px	2	desktop links
-≥ 960px	3	desktop links
-≥ 1280px	4	desktop links
+```
 
-🧪 What's verified
-npm run build → ✅ 111 modules, no errors
-npm run dev → ✅ HTTP 200, no warnings
-npm run preview → ✅ HTTP 200
-Mobile (375px), tablet (768px), desktop (1440px) layouts all tested
-Mobile hamburger drawer opens/closes correctly (link click, overlay click, ESC, resize)
-Product modal opens/closes correctly (card click, overlay click, ESC, close button)
-Search filters in real time (debounced 300ms)
-Category filter updates the grid
-Dark/light theme toggle persists to localStorage
-Favourites toggle persists to localStorage and updates the navbar badge
-📦 Pushing to GitHub
-bash
+---
 
-# 1. Initialize git (skip if you already have a .git folder)
-git init
-git branch -M main
+## Accessibility
 
-# 2. Stage and commit everything
-git add .
-git commit -m "feat: ShopVerse product listing app (React + Vite + Axios)"
+- Navbar hamburger: `aria-expanded` + `aria-controls`, animated to "X" when open
+- Cart/Favourites drawers: `role="dialog"` + `aria-modal`, ESC-to-close
+- Login modal: focus management, ESC-to-close, body scroll lock
+- Product cards: keyboard reachable, visible focus rings
+- Category filter: `aria-pressed` on each pill tab
+- All images have descriptive `alt` text
+- `prefers-reduced-motion` respected — all animations disabled
 
-# 3. Create an empty repo on GitHub first (https://github.com/new), then:
-git remote add origin https://github.com/<your-username>/shopverse.git
-git push -u origin main
-If you'd rather use the GitHub CLI:
+---
 
-bash
+## Responsive Breakpoints
 
-gh repo create shopverse --public --source=. --remote=origin --push
-📄 License
-MIT — free to use for the assignment and beyond.
+| Breakpoint | Grid Columns | Navbar |
+|---|---|---|
+| < 640px | 2 | Hamburger + icons only |
+| ≥ 640px | 2 | Hamburger + icons |
+| ≥ 768px | 2 | Desktop links + icons |
+| ≥ 1024px | 3 | Desktop links + icons |
+| ≥ 1280px | 4 | Desktop links + icons |
+
+---
+
+## Verified
+
+- `npm run lint` — 0 errors
+- `npm run build` — 303 modules, no errors
+- Mobile (375px), tablet (768px), desktop (1440px) layouts tested
+- Cart add/remove/quantity works with localStorage persistence
+- Favourites toggle works with badge count in navbar
+- Login form shows user avatar initial after sign-in
+- Mobile drawer opens/closes (hamburger, overlay click, ESC, resize)
+- All sections animate on scroll with Framer Motion
+
+---
+
+## License
+
+MIT
