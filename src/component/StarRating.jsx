@@ -8,9 +8,7 @@ export default function StarRating({ rate = 0 }) {
         return (
           <i
             key={i}
-            className={`fa-star ${
-              isFull ? 'fa-solid' : isHalf ? 'fa-solid relative after:absolute after:inset-0 after:overflow-hidden after:w-1/2 after:text-[#f5a623] after:content-["\\f005"]' : 'fa-regular'
-            }`}
+            className={`fa-star ${isFull ? 'fa-solid' : isHalf ? 'fa-solid relative after:absolute after:inset-0 after:overflow-hidden after:w-1/2 after:text-[#f5a623] after:content-["\\f005"]' : 'fa-regular'}`}
             aria-hidden="true"
           />
         )
