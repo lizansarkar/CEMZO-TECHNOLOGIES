@@ -56,28 +56,6 @@ export default function Footer() {
               </ul>
             </div>
           ))}
-
-          <div>
-            <h4 className="text-[0.92rem] font-bold font-display text-white mb-4 m-0">Contact</h4>
-            <ul className="list-none p-0 m-0 flex flex-col gap-2.5">
-              <li className="flex items-start gap-2.5 text-[0.88rem] text-white/50">
-                <i className="fa-solid fa-location-dot text-[var(--color-accent)] mt-0.5 text-[0.8rem]" aria-hidden="true" />
-                <span>456 Tech Boulevard<br />San Francisco, CA 94102</span>
-              </li>
-              <li className="flex items-center gap-2.5 text-[0.88rem] text-white/50">
-                <i className="fa-solid fa-envelope text-[var(--color-accent)] text-[0.8rem]" aria-hidden="true" />
-                <a href="mailto:support@voltmart.com" className="text-white/50 no-underline hover:text-[var(--color-accent)] transition-colors duration-200">
-                  support@voltmart.com
-                </a>
-              </li>
-              <li className="flex items-center gap-2.5 text-[0.88rem] text-white/50">
-                <i className="fa-solid fa-phone text-[var(--color-accent)] text-[0.8rem]" aria-hidden="true" />
-                <a href="tel:+18001234567" className="text-white/50 no-underline hover:text-[var(--color-accent)] transition-colors duration-200">
-                  (800) 123-4567
-                </a>
-              </li>
-            </ul>
-          </div>
         </div>
 
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
